@@ -1,0 +1,131 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* 背景全体 */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "ヒラギノ角ゴ ProN W3", "Meiryo", sans-serif;
+  background-image: url("images/dragonback.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.45);
+  background-blend-mode: darken;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* ← 全体を中央寄せ */
+  align-items: center;
+}
+
+/* intro表示位置（中央に寄せる） */
+.intro-wrapper {
+  text-align: center;
+  margin-bottom: 50px; /* ← ぎゅっと詰める */
+}
+
+/* introの中身 */
+.intro-sequence {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+  margin-bottom: 12px;
+}
+
+.intro-line {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: rgb(251, 251, 251);
+  margin: 0 auto 12px auto;
+  padding: 6px 16px;
+/*  background-color: rgba(0,0,0,0.45);*/
+  border-radius: 8px;
+  text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+}
+
+
+/* 結果表示 */
+.result-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.result-box {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 16px;
+  padding: 20px 28px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 360px;
+}
+
+/* ボタンエリア（中央にぎゅっと） */
+.button-area {
+  margin-top: 10px; /* ← ここを小さくするのがポイント */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ボタン群を横並びに */
+.button-area form:first-child {
+  display: flex;
+  gap: 16px; /* ← 間隔も少し詰める */
+  margin-bottom: 10px;
+}
+
+/* ボタン */
+button {
+  min-width: 90px;   /* ← 小さめに */
+  height: 90px;      /* ← 小さめに */
+  padding: 8px;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.3rem; /* ← 少し小さく */
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* 個別カラー */
+button[value="グー"] {
+  background: linear-gradient(135deg, #4f9deb, #2563eb);
+}
+
+button[value="チョキ"] {
+  background: linear-gradient(135deg, #f97373, #ef4444);
+}
+
+button[value="パー"] {
+  background: linear-gradient(135deg, #34d399, #10b981);
+}
+
+/* あいこ・もう一度ボタン */
+form button:not([name="hand"]) {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #333;
+  min-width: 140px;
+  height: 50px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+}
+.main-title {
+  color: #fff; /* ← 白文字 */
+  font-size: 2.4rem;
+  text-align: center;
+  margin-bottom: 16px;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.4); /* ← 背景に埋もれないように影も追加 */
+}
+

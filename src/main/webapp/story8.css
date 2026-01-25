@@ -1,0 +1,208 @@
+@charset "UTF-8";
+
+/* ================================
+   背景（クロスフェード対応）
+================================ */
+#story8Body {
+    position: relative;
+    background: black;
+    overflow: hidden;
+}
+
+#story8Body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+#story8Body.bg-cliff::before {
+    background-image: url("images/shiromae.png");
+}
+
+/* 暗転（動画前） */
+.fade-to-black::before {
+    opacity: 0;
+}
+
+/* ================================
+   雷光エフェクト
+================================ */
+.lightning-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9000;
+    transition: opacity 0.15s ease;
+}
+
+.lightning-flash.active {
+    opacity: 1;
+}
+
+/* ================================
+   キャラクター
+================================ */
+.hero-image {
+    position: fixed;
+    bottom: 0;
+    left: 40px;
+    height: 65vh;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    z-index: 100;
+}
+
+.hero-image.show {
+    opacity: 1;
+}
+
+.enemy-image {
+    position: fixed;
+    bottom: -100;
+    right: 40px;
+    height: 110vh;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    z-index: 150;
+}
+
+.enemy-image.show {
+    opacity: 1;
+}
+
+/* ================================
+   動画（フェードなし）
+================================ */
+.intro-video {
+    display: none;
+    opacity: 1 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 5000;
+}
+
+/* ================================
+   テキストボックス
+================================ */
+.textbox {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.6);
+    border-top: 3px solid white;
+    color: white;
+    z-index: 200;
+}
+
+.story-text {
+    font-size: 30px;
+    line-height: 1.8;
+    white-space: normal;
+}
+
+/* ================================
+   右下の「クリックで次へ」
+================================ */
+.next-hint {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    pointer-events: none;
+    animation: blink 1.4s ease-in-out infinite;
+    z-index: 200;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ================================
+   暗転レイヤー（次のシーンへ）
+================================ */
+.fadeout-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+    z-index: 9999;
+}
+
+.fadeout-screen.active {
+    opacity: 1;
+}
+
+/* ================================
+   激しい画面揺れ（ドラゴン着地）
+   ★超強化版（振幅2.5倍・回転強化）
+================================ */
+.screen-shake {
+    animation: shake 0.6s cubic-bezier(.36,.07,.19,.97);
+}
+
+@keyframes shake {
+    0%   { transform: translateY(0); }
+    10%  { transform: translateY(-20px); }
+    20%  { transform: translateY(15px); }
+    30%  { transform: translateY(-25px); }
+    40%  { transform: translateY(18px); }
+    50%  { transform: translateY(-30px); }
+    60%  { transform: translateY(18px); }
+    70%  { transform: translateY(-25px); }
+    80%  { transform: translateY(15px); }
+    90%  { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+/* ================================
+   ドラゴン衝撃出現（白縁取り）
+================================ */
+.enemy-pop {
+    filter: drop-shadow(0 0 25px white);
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+}
+
+/* 衝撃後の通常表示 */
+.enemy-image.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#shakeWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}

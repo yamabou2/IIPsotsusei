@@ -1,0 +1,176 @@
+@charset "UTF-8";
+
+/* ================================
+   背景
+================================ */
+#story9Body {
+    position: relative;
+    background: black;
+    overflow: hidden;
+}
+
+#story9Body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+}
+
+/* 背景画像（倒した場所） */
+#story9Body.bg-battle::before {
+    background-image: url("images/shiromae.png");
+    opacity: 1;
+}
+
+/* ================================
+   勇者・敵
+================================ */
+.hero-image {
+    position: fixed;
+    bottom: 0;
+    left: 40px;
+    height: 65vh;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.hero-image.show {
+    opacity: 1;
+}
+
+.enemy-image {
+    position: fixed;
+    bottom: 0;
+    right: 40px;
+    height: 90vh;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.enemy-image.dark {
+    filter: brightness(0.27);
+}
+
+.enemy-image.show {
+    opacity: 1;
+}
+
+/* ================================
+   SVG霧（PNGなし）
+================================ */
+.fog-wrap {
+    position: fixed;
+    width: 350px;
+    height: 350px;
+
+    /* ★ 霧の出現位置（下げた） */
+    left: 55%;
+    top:20%;
+
+    pointer-events: none;
+    opacity: 0; /* 最初は非表示 */
+    transition: opacity 1.2s ease;
+    z-index: 9999;
+}
+
+.fog {
+    background: transparent !important;
+}
+
+/* 渦巻きアニメーション（回転） */
+@keyframes fogRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.fog-rotate {
+    animation: fogRotate 5s linear infinite;
+    transform-origin: 50% 50%;
+}
+
+/* ★ 霧が城の門へ流れていくアニメーション（左上へ強く移動） */
+@keyframes fogFlow {
+    0% {
+        /* 丸いまま（回転だけ止めてそのまま受け継ぐイメージ） */
+        transform: translate(0, 0) scale(1, 1);
+        opacity: 0.9;
+    }
+    40% {
+        /* ここで一気に縦につぶして「線」にする */
+        transform: translate(0, 0) scale(1, 0.05);
+        opacity: 1;
+    }
+    100% {
+        /* 細い線のまま左上へ飛んでいく */
+        transform: translate(-450px, -250px) scale(0.2, 0.02);
+        opacity: 0;
+    }
+}
+.fog-flow {
+    animation: fogFlow 2.5s ease-out forwards;
+}
+
+/* ================================
+   テキストボックス
+================================ */
+.textbox {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.6);
+    border-top: 3px solid white;
+    color: white;
+}
+
+.story-text {
+    font-size: 30px;
+    line-height: 1.8;
+    white-space: normal;
+}
+
+/* 右下の「クリックで次へ」 */
+.next-hint {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    pointer-events: none;
+    animation: blink 1.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ================================
+   暗転レイヤー
+================================ */
+.fadeout-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+    z-index: 9999;
+}
+
+.fadeout-screen.active {
+    opacity: 1;
+}

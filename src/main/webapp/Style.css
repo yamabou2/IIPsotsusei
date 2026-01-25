@@ -1,0 +1,237 @@
+@charset "UTF-8";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* スクロールバー防止でサイズ安定 */
+}
+
+/* タイトル画面 */
+#titleScreen {
+  opacity: 0;               
+  width: 100vw;
+  height: 100vh;
+  background: url("images/タイトル画面.png") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  transition: opacity 2s ease;
+}
+#titleScreen.show { opacity: 1; }
+
+/* タイトル部分 */
+header {
+  text-align: center;
+  margin-top: 100px;
+}
+header h1 {
+  margin-bottom: 6px;
+  font-size: 48px;
+  color: #fff;
+  text-shadow: 2px 2px 5px black;
+}
+header h2.subtitle {
+  font-size: 1.2em;
+  font-weight: normal;
+  color: rgb(255, 255, 255);
+  line-height: 1.2;
+}
+
+/* click to start */
+#clickToStart {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5em;
+  color: #fff;
+  text-shadow: 2px 2px 5px black;
+  opacity: 0;
+  transition: opacity 1s ease;
+  cursor: pointer;
+  text-align: center;
+}
+#clickToStart.show { opacity: 1; }
+
+/* ボタン */
+.button-container {
+  margin-top: 120px;
+  display: none;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  gap: 30px;
+}
+.button-container.show {
+  display: flex;
+  opacity: 1;
+}
+.button-container button {
+  padding: 20px 50px;
+  font-size: 1.3em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  transition: 0.3s;
+}
+.button-container button:hover {
+  background-color: rgba(255,255,255,0.8);
+  color: black;
+}
+
+/* ★ 左上キャラ一覧ボタン（ストーリーボタンの小型版） */
+#charListBtn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+  padding: 10px 25px;      /* ストーリーボタンの半分サイズ */
+  font-size: 0.9em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  transition: 0.3s;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 9000;
+}
+
+#charListBtn:hover {
+  background-color: rgba(255,255,255,0.8);
+  color: black;
+}
+
+#charListBtn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ローディング画面 */
+#loading {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: url("images/loadingback.jpg") no-repeat center center;
+  background-size: cover;
+  z-index: 9999;
+  transition: opacity 2s ease;
+}
+#loading.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ローディング中の少女＋文字 */
+.kitou {
+  position: absolute;
+  bottom: 80px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  font-size: 2em;
+  gap: 8px;
+  animation: vanish 1.5s forwards;
+  animation-delay: 6.5s;
+}
+.kitou img {
+  height: 250px;
+  opacity: 0.9;
+  animation: glow 3s infinite ease-in-out,
+             sway 4s infinite ease-in-out;
+}
+.loading-text { animation: blink 1.2s infinite; }
+
+/* 注意文 */
+.caution {
+  position: absolute;
+  bottom: 80px;
+  right: 20px;
+  color: white;
+  font-size: 1.2em;
+  text-align: right;
+  text-shadow: 2px 2px 5px black;
+  animation: vanish 1.5s forwards;
+  animation-delay: 6.5s;
+}
+
+/* アニメーション */
+@keyframes vanish { to { opacity: 0; visibility: hidden; } }
+@keyframes glow   { 0%,100%{filter:drop-shadow(0 0 5px white);} 50%{filter:drop-shadow(0 0 20px white);} }
+@keyframes sway   { 0%{transform:translateY(0);} 50%{transform:translateY(-10px);} 100%{transform:translateY(0);} }
+@keyframes blink  { 0%,50%,100%{opacity:1;} 25%,75%{opacity:0.3;} }
+
+/* 飛び出しアニメーション（迫力強化版） */
+#titleScreen .fly-out {
+  animation: flyOutFront 1s forwards;
+}
+
+@keyframes flyOutFront {
+  0% { 
+    transform: translate(0,0) scale(1) rotate(0deg); 
+    opacity: 1; 
+    filter: blur(0);
+  }
+  100% { 
+    transform: translate(var(--x), var(--y)) scale(3.5) rotate(var(--rot)); 
+    opacity: 0; 
+    filter: blur(6px);
+  }
+}
+
+/* ミニゲーム画面用（タイトル画面と同じ背景） */
+#minigameBody {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("images/タイトル画面.png") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-container {
+  text-align: center;
+  font-size: 2em;
+  text-shadow: 2px 2px 5px black;
+}
+
+/* ストーリー画面用（タイトル画面と同じ背景） */
+#storyBody {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("images/タイトル画面.png") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.story-container {
+  text-align: center;
+  font-size: 2em;
+  text-shadow: 2px 2px 5px black;
+}
+
+/* 共通背景（ログイン画面など） */
+body {
+  background: url("images/タイトル画面.png") no-repeat center center fixed;
+  background-size: cover;
+}

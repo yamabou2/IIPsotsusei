@@ -1,0 +1,160 @@
+@charset "UTF-8";
+
+/* ✅ 背景クロスフェード用のレイヤー */
+#story2Body {
+    position: relative;
+    background: black; /* ← 本体は黒のまま */
+    overflow: hidden;
+}
+
+/* ✅ 背景画像レイヤー（最初は透明） */
+#story2Body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease; /* ← クロスフェード */
+    pointer-events: none;
+}
+
+/* ✅ 草原背景をフェードイン */
+#story2Body.bg-grass::before {
+    background-image: url("images/草原.png");
+    opacity: 1;
+}
+
+/* ✅ 勇者画像（最初は画面外 & 透明） */
+.hero-image {
+    position: fixed;
+    bottom: -9999px;   /* ← 初期は画面外に退避（左上に一瞬出る問題を防ぐ） */
+    left: 40px;
+    height: 65vh;
+    opacity: 0;
+    transition: opacity 1.2s ease, bottom 0s;
+}
+
+/* ✅ 勇者フェードイン */
+.hero-image.show {
+    bottom: 0;         /* ← 画面内に戻す */
+    opacity: 1;
+}
+
+/* ✅ 敵画像（最初は画面外 & 透明） */
+.enemy-image {
+    position: fixed;
+    bottom: -9999px;   /* ← 初期は画面外に退避 */
+    right: 40px;
+    height: 65vh;
+    opacity: 0;
+    transition: opacity 1.2s ease, bottom 0s;
+}
+
+/* ✅ 敵フェードイン */
+.enemy-image.show {
+    bottom: 0;         /* ← 画面内に戻す */
+    opacity: 1;
+}
+
+/* ✅ テキストボックス（白枠・固定サイズ） */
+.textbox {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.6);
+    border-top: 3px solid white;
+    color: white;
+}
+
+/* ✅ テキスト */
+.story-text {
+    font-size: 30px;
+    line-height: 1.8;
+    white-space: normal;
+}
+
+/* ✅ 右下の「クリックで次へ」 */
+.next-hint {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    pointer-events: none;
+    animation: blink 1.4s ease-in-out infinite;
+}
+
+/* ✅ 吹き出しの基本（半透明・幅調整） */
+.bubble {
+    position: fixed;
+    max-width: 240px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.85);
+    color: black;
+    border-radius: 14px;
+    font-size: 22px;
+    line-height: 1.4;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 15;
+}
+
+/* ✅ 吹き出しの三角（位置調整） */
+.bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 24px;
+    border-width: 12px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.85) transparent transparent transparent;
+}
+
+/* ✅ 表示時 */
+.bubble.show {
+    opacity: 1;
+}
+
+/* ✅ 勇者の吹き出し（画面中央寄り） */
+#heroBubble {
+    bottom: 460px;
+    left: calc(40px + 280px);   /* ← ここを増やすと中央へ寄る */
+}
+
+/* ✅ 敵の吹き出し（画面中央寄り） */
+#enemyBubble {
+    bottom: 460px;
+    right: calc(40px + 280px);  /* ← ここを増やすと中央へ寄る */
+}
+
+/* ✅ 画面暗転用レイヤー */
+.fadeout-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease; /* ← じわっと暗転 */
+    z-index: 9999;
+}
+
+.fadeout-screen.active {
+    opacity: 1;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}

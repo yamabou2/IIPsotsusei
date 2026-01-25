@@ -1,0 +1,325 @@
+@charset "UTF-8";
+
+/* ============================
+   フェードイン
+============================ */
+#killBody {
+    opacity: 0;
+    animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ============================
+   背景
+============================ */
+#killBody {
+    position: relative;
+    background: black;
+    overflow: hidden;
+}
+
+#killBody::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("images/gyokuza.png");
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    z-index: -1;
+}
+
+/* ============================
+   ボス画像
+============================ */
+.enemy-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+}
+
+.enemy-image img {
+    height: 98vh;
+    width: auto;
+    display: block;
+}
+
+/* ============================
+   テキストボックス
+============================ */
+.textbox {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.6);
+    border-top: 3px solid white;
+    color: white;
+    z-index: 30;
+}
+
+.story-text {
+    font-size: 30px;
+    line-height: 1.8;
+}
+
+/* ============================
+   テキストグリッチ
+============================ */
+.glitch-text {
+    animation: glitchText 0.15s infinite;
+}
+
+@keyframes glitchText {
+    0%   { text-shadow: 2px 0 red, -2px 0 blue; }
+    50%  { text-shadow: -2px 0 red, 2px 0 blue; }
+    100% { text-shadow: 2px 0 red, -2px 0 blue; }
+}
+
+/* ============================
+   文字が溶け落ちる
+============================ */
+.text-melt {
+    animation: textMelt 1.2s ease forwards;
+}
+
+@keyframes textMelt {
+    0% { filter: blur(0); transform: translateY(0); opacity: 1; }
+    40% { filter: blur(2px); transform: translateY(6px); }
+    70% { filter: blur(6px); transform: translateY(20px); opacity: 0.6; }
+    100% { filter: blur(12px); transform: translateY(60px); opacity: 0; }
+}
+
+/* ============================
+   テキストボックス崩壊
+============================ */
+.textbox-break {
+    animation: textboxBreak 0.6s ease forwards;
+}
+
+@keyframes textboxBreak {
+    0% { transform: translateY(0) skew(0deg); filter: blur(0); opacity: 1; }
+    30% { transform: translateY(10px) skew(-2deg); filter: blur(1px); }
+    60% { transform: translateY(-8px) skew(4deg); filter: blur(3px); }
+    100% { transform: translateY(60px) skew(-8deg); filter: blur(8px); opacity: 0; }
+}
+
+/* ============================
+   次へヒント
+============================ */
+.next-hint {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    pointer-events: none;
+    animation: blink 1.4s ease-in-out infinite;
+    z-index: 50;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ============================
+   暗転
+============================ */
+.fadeout-screen {
+    position: fixed;
+    inset: 0;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease-in;
+    z-index: 10000;
+}
+
+.fadeout-screen.active {
+    opacity: 1;
+}
+
+/* ============================
+   色反転
+============================ */
+.invert-flash {
+    filter: invert(100%) contrast(2) brightness(1.4);
+}
+
+/* ============================
+   画面揺れ
+============================ */
+.screen-shake {
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0%   { transform: translate(0, 0); }
+    20%  { transform: translate(14px, -14px); }
+    40%  { transform: translate(-14px, 14px); }
+    60%  { transform: translate(12px, -12px); }
+    80%  { transform: translate(-12px, 12px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* ============================
+   血の赤み
+============================ */
+.blood-tint {
+    filter: hue-rotate(-40deg) saturate(3) brightness(0.8);
+}
+
+/* ============================
+   心拍
+============================ */
+.heartbeat img {
+    animation: heartbeatPulse 1.1s ease-in-out infinite;
+}
+
+@keyframes heartbeatPulse {
+    0%   { transform: scale(1); }
+    10%  { transform: scale(1.06); }
+    55%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+/* ============================
+   shockwave
+============================ */
+.white-shockwave,
+.dark-shockwave {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.45;
+    filter: blur(4px);
+    animation: shockExpand 3s linear forwards;
+}
+
+.white-shockwave {
+    border: 16px solid rgba(200,150,255,0.9);
+}
+
+.dark-shockwave {
+    border: 16px solid rgba(0,0,0,1);
+}
+
+@keyframes shockExpand {
+    from { transform: translate(-50%, -50%) scale(0.4); opacity: 0.45; }
+    to   { transform: translate(-50%, -50%) scale(20); opacity: 0; }
+}
+
+/* ============================
+   粒子
+============================ */
+.particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 40;
+    box-shadow: 0 0 12px currentColor;
+}
+
+@keyframes particleFly {
+    from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    to {
+        opacity: 0;
+        transform: translate(
+            calc(-50% + var(--tx) * 3.5),
+            calc(-50% + var(--ty) * 3.5)
+        ) scale(0.2);
+    }
+}
+
+/* ============================
+   空間歪曲
+============================ */
+.distort {
+    animation: distortAnim 0.8s ease-in-out;
+}
+
+@keyframes distortAnim {
+    0%   { filter: blur(0) contrast(1); }
+    40%  { filter: blur(3px) contrast(1.4); }
+    70%  { filter: blur(6px) contrast(1.8); }
+    100% { filter: blur(0) contrast(1); }
+}
+
+/* ============================
+   画面ノイズ
+============================ */
+#noise {
+    position: fixed;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.08),
+            rgba(255,255,255,0.08) 1px,
+            transparent 1px,
+            transparent 2px
+        );
+    mix-blend-mode: overlay;
+    opacity: 0;
+    z-index: 9000;
+    pointer-events: none;
+    animation: noiseMove 0.08s infinite;
+}
+
+@keyframes noiseMove {
+    from { background-position: 0 0; }
+    to   { background-position: 140px 140px; }
+}
+
+.noise-on { opacity: 0.4; }
+
+/* ============================
+   ★ 画面割れ動画
+============================ */
+.screen-break-video {
+    position: fixed;
+    inset: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9500;
+    transition: opacity 0.25s ease-in-out;
+}
+
+.screen-break-video.active {
+    opacity: 1;
+}
+
+/* ============================
+   赤黒フラッシュ
+============================ */
+.redblack-flash {
+    animation: redBlackFlash 0.25s ease;
+}
+
+@keyframes redBlackFlash {
+    0% { filter: none; }
+    40% { filter: brightness(0.4) contrast(3) saturate(3) hue-rotate(-40deg); }
+    70% { filter: brightness(0.15) contrast(4) saturate(4); }
+    100% { filter: none; }
+}

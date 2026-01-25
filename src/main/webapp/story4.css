@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+/* ✅ 背景クロスフェード用のレイヤー（ストーリー2と同じ） */
+#story4Body {
+    position: relative;
+    background: black;
+    overflow: hidden;
+}
+
+/* ✅ 背景画像レイヤー（最初は透明） */
+#story4Body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+}
+
+/* ✅ 村の背景（廃村） */
+#story4Body.bg-grass::before {
+    background-image: url("images/storyhaison.png"); /* ← ここは好きな背景に変更してOK */
+    opacity: 1;
+}
+
+/* ✅ 勇者（背景と同時にフェードイン） */
+.hero-image {
+    position: fixed;
+    bottom: 0;
+    left: 40px;
+    height: 65vh;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.hero-image.show {
+    opacity: 1;
+}
+
+/* ✅ 敵（最初は透明 → 指定の文章の後にフェードイン） */
+.enemy-image {
+    position: fixed;
+    bottom: 250px;
+    right: 40px;
+    height: 30vh;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.enemy-image.show {
+    opacity: 1;
+}
+
+/* ✅ テキストボックス（ストーリー2と完全一致） */
+.textbox {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.6);
+    border-top: 3px solid white;
+    color: white;
+}
+
+/* ✅ テキスト（ストーリー2と完全一致） */
+.story-text {
+    font-size: 30px;
+    line-height: 1.8;
+    white-space: normal;
+}
+
+/* ✅ 右下の「クリックで次へ」 */
+.next-hint {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    pointer-events: none;
+    animation: blink 1.4s ease-in-out infinite;
+}
+
+/* ✅ 戦闘前の吹き出し */
+.bubble {
+    position: fixed;
+    bottom: 460px;
+    left: calc(40px + 280px);
+    max-width: 240px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.85);
+    color: black;
+    border-radius: 14px;
+    font-size: 22px;
+    line-height: 1.4;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 15;
+}
+
+.bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 24px;
+    border-width: 12px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.85) transparent transparent transparent;
+}
+
+.bubble.show {
+    opacity: 1;
+}
+
+/* ✅ 暗転レイヤー（ストーリー2と同じ） */
+.fadeout-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+    z-index: 9999;
+}
+
+.fadeout-screen.active {
+    opacity: 1;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}

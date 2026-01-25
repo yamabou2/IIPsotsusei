@@ -1,0 +1,264 @@
+@charset "UTF-8";
+
+/* ================================
+   画面全体フェードイン
+================================ */
+#story11Body {
+    opacity: 0;
+    animation: story11FadeIn 1.2s ease forwards;
+}
+
+@keyframes story11FadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ================================
+   背景クロスフェード
+================================ */
+#story11Body {
+    position: relative;
+    background: black;
+    overflow: hidden;
+}
+
+#story11Body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+}
+
+#story11Body.bg-story11::before {
+    background-image: url("images/gyokuza.png");
+    opacity: 1;
+}
+
+/* ================================
+   ボス画像（中央に大きく）
+================================ */
+.enemy-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    opacity: 0;
+    filter: brightness(0) contrast(1.2);
+    transition: opacity 1.2s ease, filter 7s ease;
+    z-index: 20;
+    overflow: visible;
+}
+
+.enemy-image.show {
+    opacity: 1;
+    filter: brightness(1) contrast(1);
+}
+
+.enemy-image img {
+    height: 98vh;
+    width: auto;
+    display: block;
+    pointer-events: none;
+}
+
+/* ================================
+   黒オーラ
+================================ */
+.enemy-image::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    background: radial-gradient(circle, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 70%);
+    filter: blur(30px);
+    opacity: 0;
+    animation: auraPulse 3s ease-in-out infinite;
+    z-index: -1;
+}
+
+.enemy-image.show::before {
+    opacity: 1;
+}
+
+@keyframes auraPulse {
+    0%   { transform: scale(1); opacity: 0.4; }
+    50%  { transform: scale(1.15); opacity: 0.75; }
+    100% { transform: scale(1); opacity: 0.4; }
+}
+
+/* ================================
+   ★ 粒子（破片）ランダム生成 + トレイル
+================================ */
+.particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 30;
+
+    /* トレイル（光の尾） */
+    box-shadow: 0 0 12px currentColor;
+}
+
+/* 粒子が飛び散るアニメーション（飛距離UP + トレイル強化） */
+@keyframes particleFly {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        filter: blur(0px);
+        box-shadow: 0 0 12px currentColor;
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(
+            calc(-50% + var(--tx) * 3.2),
+            calc(-50% + var(--ty) * 3.2)
+        ) scale(0.25);
+        opacity: 0;
+        filter: blur(6px);
+        box-shadow: 0 0 25px currentColor;
+    }
+}
+
+/* ================================
+   ★ ボス本体の粒子化（ゆっくり消える）
+================================ */
+.boss-die {
+    animation: bossVanish 2.4s ease-out forwards;
+    filter: brightness(2) blur(2px);
+}
+
+@keyframes bossVanish {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0px);
+    }
+    40% {
+        opacity: 0.9;
+        transform: scale(1.05);
+        filter: blur(2px);
+    }
+    70% {
+        opacity: 0.6;
+        transform: scale(0.9);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.6);
+        filter: blur(12px);
+    }
+}
+
+/* ================================
+   ★ 衝撃波（Shockwave）複数生成対応
+================================ */
+.shockwave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 6px solid rgba(255,255,255,0.9);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes shockwaveExpand {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.2);
+        filter: blur(1px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(10);
+        filter: blur(3px);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(25);
+        filter: blur(12px);
+    }
+}
+
+/* ================================
+   テキストボックス
+================================ */
+.textbox {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.6);
+    border-top: 3px solid white;
+    color: white;
+    z-index: 20;
+}
+
+.story-text {
+    font-size: 30px;
+    line-height: 1.8;
+    white-space: normal;
+}
+
+/* ================================
+   「クリックで次へ」
+================================ */
+.next-hint {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    pointer-events: none;
+    animation: blink 1.4s ease-in-out infinite;
+    z-index: 200;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ================================
+   暗転レイヤー
+================================ */
+.fadeout-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+    z-index: 9999;
+}
+
+.fadeout-screen.active {
+    opacity: 1;
+}

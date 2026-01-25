@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+/* ✅ タイトル位置 */
+#minigameBody {
+  position: relative;
+}
+
+.minigame-title {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.4em;
+  color: white;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+}
+
+/* ✅ ゲーム選択ボックス：横並び */
+.minigame-selection {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 180px;
+}
+
+/* ✅ ゲームボックス */
+.game-box {
+  width: 300px;
+  height: 220px;
+  background-color: rgba(255,255,255,0.25);
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+/* ✅ 文字を最前面に固定 */
+.game-text {
+  position: relative;
+  z-index: 10;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+/* ✅ ホバー画像（背景扱い） */
+.hover-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* ✅ 画像を80%の明るさにして文字を見やすく */
+  filter: brightness(80%);
+
+  opacity: 0;
+  transition: 0.3s;
+
+  /* ✅ 背面に固定 */
+  z-index: 1;
+}
+
+/* ✅ ホバー時に画像がふわっと出る */
+.game-box:hover .hover-image {
+  opacity: 1;
+}
+
+/* ✅ ホバー時のボックス演出 */
+.game-box:hover {
+  transform: scale(1.06);
+  background-color: rgba(255,255,255,0.75);
+  color: black;
+}
+
+/* ✅ 戻るボタン */
+.minigame-buttons {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.back-button {
+  padding: 14px 40px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  transition: 0.3s;
+}
+
+.back-button:hover {
+  background-color: rgba(255,255,255,0.8);
+  color: black;
+}

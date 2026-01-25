@@ -1,0 +1,96 @@
+@charset "UTF-8";
+
+/* ✅ ストーリー専用：画面下部中央配置（ミニゲームと統一） */
+.story-buttons {
+  position: fixed;
+  bottom: 40px;        /* ミニゲームと同じ距離に統一 */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ 戻るボタン：ミニゲームと同じデザイン */
+.back-button {
+  padding: 14px 40px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  transition: 0.3s;
+}
+
+.back-button:hover {
+  background-color: rgba(255,255,255,0.8);
+  color: black;
+}
+
+/* ✅ 背景を少し暗くするオーバーレイ */
+body {
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* ← 暗さはここで調整 */
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ✅ ボックスなし版：背景の上に直接文字を浮かべる */
+.story-container {
+  width: 100%;
+  margin: 120px auto 0;
+  padding: 0 60px;
+
+  /* ✅ ボックスの見た目を完全に消す */
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  border-radius: 0;
+}
+
+/* ✅ タイプライター文字（背景に馴染むように調整） */
+.story-text {
+  font-size: 22px;
+  line-height: 1.9;
+  color: white;
+
+  /* ✅ 背景に埋もれないように文字に影をつける */
+  text-shadow: 0 0 6px rgba(0,0,0,0.7);
+
+  /* ✅ ページ切り替えのガタつき防止 */
+  min-height: 300px;
+
+  white-space: normal;
+}
+
+/* ✅ 右下の「クリックで次へ」案内（初期は非表示 & アニメーション停止） */
+.next-hint {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+
+  font-size: 18px;
+  color: rgba(255,255,255,0.85);
+
+  opacity: 0;             /* ✅ 初期は完全に非表示 */
+  pointer-events: none;
+
+  animation: none;        /* ✅ 初期は点滅しない（これが重要） */
+}
+
+/* ✅ 点滅アニメーション定義 */
+@keyframes blink {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}

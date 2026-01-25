@@ -1,0 +1,272 @@
+@charset "UTF-8";
+
+/* ================================
+   背景クロスフェード
+================================ */
+#story10Body {
+    position: relative;
+    background: black;
+    overflow: hidden;
+}
+
+#story10Body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+}
+
+#story10Body.bg-story10::before {
+    background-image: url("images/gyokuza.png");
+    opacity: 1;
+}
+
+/* ================================
+   勇者
+================================ */
+.hero-image {
+    position: fixed;
+    bottom: 0;
+    left: 40px;
+    height: 65vh;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.hero-image.show {
+    opacity: 1;
+}
+
+/* ================================
+   敵（本体は完全静止）
+================================ */
+.enemy-image {
+    position: fixed;
+    bottom: 0;
+    right: 40px;
+    height: auto;
+
+    opacity: 0;
+    filter: brightness(0) contrast(1.2);
+    transition: opacity 1.2s ease, filter 7s ease;
+
+    z-index: 20;
+    overflow: visible;
+}
+
+/* 敵画像本体 */
+.enemy-image img {
+    height: 75vh;
+    width: auto;
+    display: block;
+    pointer-events: none;
+}
+
+/* 出現 */
+.enemy-image.show {
+    opacity: 1;
+    filter: brightness(1) contrast(1);
+}
+
+/* ================================
+   暴走オーラ（メイン）
+================================ */
+.enemy-image::before {
+    content: "";
+    position: absolute;
+    inset: -45%;
+
+    background: radial-gradient(
+        circle at 55% 55%,
+        rgb(255, 0, 0) 0%,
+        rgb(255, 0, 0) 28%,
+        rgba(150,0,0,0.65) 48%,
+        rgba(0,0,0,0) 72%
+    );
+
+    filter: blur(45px);
+    opacity: 0;
+
+    animation:
+        auraOverBeat 1.6s cubic-bezier(.3,0,.2,1) infinite,
+        auraViolentWave 3.8s linear infinite;
+
+    z-index: -1;
+}
+
+/* 出現時にオーラON */
+.enemy-image.show::before {
+    opacity: 1;
+}
+
+/* ================================
+   鼓動（ドクン！ドドン！）
+================================ */
+@keyframes auraOverBeat {
+    0% {
+        transform: scale(1);
+        opacity: 0.25;
+    }
+    10% {
+        transform: scale(1.55);
+        opacity: 1;
+    }
+    18% {
+        transform: scale(1.15);
+        opacity: 0.55;
+    }
+    32% {
+        transform: scale(1.35);
+        opacity: 0.85;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.25;
+    }
+}
+
+/* ================================
+   空間歪曲（暴れる波）
+================================ */
+@keyframes auraViolentWave {
+    0% {
+        transform: rotate(0deg) skew(0deg,0deg) translate(0,0);
+    }
+    20% {
+        transform: rotate(7deg) skew(5deg,-4deg) translate(-4%,3%);
+    }
+    40% {
+        transform: rotate(-7deg) skew(-5deg,4deg) translate(4%,-3%);
+    }
+    60% {
+        transform: rotate(5deg) skew(4deg,5deg) translate(-3%,-4%);
+    }
+    80% {
+        transform: rotate(-5deg) skew(-4deg,-5deg) translate(3%,4%);
+    }
+    100% {
+        transform: rotate(0deg) skew(0deg,0deg) translate(0,0);
+    }
+}
+
+/* ================================
+   衝撃フラッシュ（オーラのみ）
+================================ */
+.enemy-image.show::after {
+    content: "";
+    position: absolute;
+    inset: -65%;
+
+/*    background: radial-gradient(*/
+/*        circle,*/
+/*        rgb(159, 0, 0),*/
+/*        rgb(159, 0, 0) 65%*/
+/*    );*/
+
+    animation: auraFlash 1.6s infinite;
+    z-index: -2;
+}
+
+@keyframes auraFlash {
+    0%, 75%, 100% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.9;
+    }
+    16% {
+        opacity: 0;
+    }
+}
+
+/* ================================
+   霧
+================================ */
+.fog-wrap {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    left: 60%;
+    top: 33%;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 1.5s ease;
+    z-index: 10;
+}
+
+.fog {
+    background: transparent !important;
+    animation: fogRotate 5s linear infinite;
+    transform-origin: 50% 50%;
+}
+
+.fog-wrap.fadeout {
+    opacity: 0;
+}
+
+@keyframes fogRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ================================
+   テキストボックス
+================================ */
+.textbox {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.6);
+    border-top: 3px solid white;
+    color: white;
+    z-index: 20;
+}
+
+.story-text {
+    font-size: 30px;
+    line-height: 1.8;
+}
+
+/* ================================
+   次へ
+================================ */
+.next-hint {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    pointer-events: none;
+    animation: blink 1.4s ease-in-out infinite;
+    z-index: 200;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ================================
+   暗転
+================================ */
+.fadeout-screen {
+    position: fixed;
+    inset: 0;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+    z-index: 9999;
+}
+
+.fadeout-screen.active {
+    opacity: 1;
+}

@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+/* ✅ 背景クロスフェード用のレイヤー（ストーリー2と同じ） */
+#story3Body {
+    position: relative;
+    background: black;
+    overflow: hidden;
+}
+
+/* ✅ 背景画像レイヤー（最初は透明） */
+#story3Body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+}
+
+/* ✅ 草原背景（戦闘後の静けさ） */
+#story3Body.bg-grass::before {
+    background-image: url("images/草原.png");
+    opacity: 1;
+}
+
+/* ✅ 勇者（最初は透明 → 後でフェードイン） */
+.hero-image {
+    position: fixed;
+    bottom: 0;
+    left: 40px;
+    height: 65vh;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+/* ✅ フェードイン後 */
+.hero-image.show {
+    opacity: 1;
+}
+
+/* ✅ 敵（最初は透明 + 暗くする → 後でフェードイン） */
+.enemy-image {
+    position: fixed;
+    bottom: 0;
+    right: 40px;
+    height: 65vh;
+    opacity: 0;
+    filter: brightness(0.27); /* ← 暗くする */
+    transition: opacity 1.2s ease;
+}
+
+/* ✅ フェードイン後 */
+.enemy-image.show {
+    opacity: 1;
+}
+
+/* ✅ テキストボックス（ストーリー2と完全一致） */
+.textbox {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.6);
+    border-top: 3px solid white;
+    color: white;
+}
+
+/* ✅ テキスト（ストーリー2と完全一致） */
+.story-text {
+    font-size: 30px;
+    line-height: 1.8;
+    white-space: normal;
+}
+
+/* ✅ 右下の「クリックで次へ」 */
+.next-hint {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    opacity: 0;
+    pointer-events: none;
+    animation: blink 1.4s ease-in-out infinite;
+}
+
+/* ✅ 暗転レイヤー（ストーリー2と同じ） */
+.fadeout-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+    z-index: 9999;
+}
+
+.fadeout-screen.active {
+    opacity: 1;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
